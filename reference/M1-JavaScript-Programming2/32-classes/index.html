@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<title>JavaScript Programming | ZENVA.com</title>
+	</head>
+	<body>		
+		<script>
+			var Monster = function() {
+				console.log('a new monster is being created');
+
+				this.energy = Math.random() * 100;
+
+				/*this.roar = function() {
+					console.log('RRROAARR');
+				}*/
+			};
+
+			Monster.prototype.roar = function() {
+				console.log('RRROAARR');
+			};
+
+			Monster.prototype.getStronger = function() {
+				//this.energy = this.energy * 2;
+				this.energy *=  2;
+			}
+
+
+			var enemyLevel1 = new Monster();
+			var enemyLevel2 = new Monster();
+			var enemyLevel3 = new Monster();
+			var enemyLevel4 = new Monster();
+		</script>
+	</body>
+</html>

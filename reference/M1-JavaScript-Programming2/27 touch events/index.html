@@ -1,0 +1,148 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, user-scalable=no"
+  <title>JavaScript Programming | ZENVA.com</title>
+  <style>
+    canvas {
+      
+      width: 100%;
+    }
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <!--<h1>Touch Events and Viewport</h1>-->
+  <canvas id="mycanvas" width="640" height="360" ></canvas>
+  <script>
+    window.addEventListener("load",function() {
+      //constants
+      var GAME_WIDTH = 640;
+      var GAME_HEIGHT = 360;
+
+      //enemies
+      var enemies = [
+        {
+          x: 100, //x coordinate
+          y: 100, //y coordinate
+          speedY: 1, //speed in Y
+          w: 40, //width
+          h: 40 //heght
+        },
+        {
+          x: 260,
+          y: 100,
+          speedY: 2,
+          w: 40,
+          h: 40
+        },
+        {
+          x: 380,
+          y: 100,
+          speedY: 3,
+          w: 40,
+          h: 40
+        },
+        {
+          x: 450,
+          y: 100,
+          speedY: 7,
+          w: 40,
+          h: 40
+        }
+      ];
+
+      //the player object
+      var player = {
+        x: 10,
+        y: 160,
+        speedX: 2,
+        isMoving: false,  //keep track whether the player is moving or not
+        w: 40,
+        h: 40
+      };
+
+      var movePlayer = function() {
+        player.isMoving = true;
+      }
+
+      var stopPlayer = function() {
+        player.isMoving = false;
+      }
+      
+      //grab the canvas and context
+      var canvas = document.getElementById("mycanvas");
+      var ctx = canvas.getContext("2d");
+
+      //event listeners to move player
+      canvas.addEventListener('mousedown', movePlayer);
+      canvas.addEventListener('mouseup', stopPlayer);  
+      canvas.addEventListener('touchstart', movePlayer);
+      canvas.addEventListener('touchend', stopPlayer);  
+
+      
+      //update the logic
+      var update = function() {
+
+        //update player
+        if(player.isMoving) {
+          player.x = player.x + player.speedX;
+        }
+
+        //update enemies
+        var i = 0;
+        var n = enemies.length;
+        
+        enemies.forEach(function(element, index){
+          element.y += element.speedY;
+          
+          //check borders
+          if(element.y <= 10) {
+            element.y = 10;
+            //element.speedY = element.speedY * -1;
+            element.speedY *= -1;
+          }
+          else if(element.y >= GAME_HEIGHT - 50) {
+            element.y = GAME_HEIGHT - 50;
+            element.speedY *= -1;
+          }
+        });
+
+
+      };
+
+      //show the game on the screen
+      var draw = function() {
+        //clear the canvas
+        ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        
+
+        //draw player
+        ctx.fillStyle = "#00FF00";
+        ctx.fillRect(player.x, player.y, player.w, player.h);
+
+        //draw enemies
+        ctx.fillStyle = "#3333FF";
+        enemies.forEach(function(element, index){
+          ctx.fillRect(element.x, element.y, element.w, element.h);
+        });
+      };
+
+      //gets executed multiple times per second
+      var step = function() {
+
+        update();
+        draw();
+
+        window.requestAnimationFrame(step);
+      };
+
+      //initial kick
+      step();
+    });
+  </script>
+</body>
+</html>

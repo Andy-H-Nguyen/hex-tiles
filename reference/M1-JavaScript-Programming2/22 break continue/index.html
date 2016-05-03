@@ -1,0 +1,27 @@
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <h1>Break - Continue</h1>
+  <script>
+
+    var numbers = [1, 33, 55, -1, 101, -33, 55];
+
+    var l = numbers.length;
+
+    for(var i = 0; i < l; i++) {
+
+      if(numbers[i] < 0) {
+        continue;
+      }
+
+      if(numbers[i] > 100) {
+        break;
+      }
+
+      console.log(numbers[i]);
+    }
+  </script>
+</body>
+</html>

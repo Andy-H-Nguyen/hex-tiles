@@ -1,0 +1,23 @@
+<html>
+	<head></head>
+	<body>
+		Nested Functions
+		<script>
+
+			function showEverywhere(text) {
+
+				function decorate(a) {
+					return "###---" + a + "---###";
+				};
+
+				text = decorate(text);
+
+				console.log(text);
+				alert(text);
+			};
+
+			showEverywhere("Hello World");
+
+		</script>
+	</body>
+</html>

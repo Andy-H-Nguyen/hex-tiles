@@ -1,0 +1,92 @@
+<html>
+<head>
+  <title></title>
+  <style>
+    canvas {border: 1px solid black}
+  </style>
+</head>
+<body>
+  <h1>Boolean Variables</h1>
+  <canvas id="mycanvas" width="300" height="300" ></canvas>
+  <script>
+
+    //initial position
+    var x = 10;
+    var y = 10;
+
+    //rectangle dimensions
+    var w = 20;
+    var h = 30;
+
+    //speed at which it moves
+    var speed = 2;
+
+    //grab the canvas and context
+    var canvas = document.getElementById("mycanvas");
+    var ctx = canvas.getContext("2d");
+
+    //color zones
+    var blueZone, greenZone;
+
+    //update the rectangle position
+    var update = function() {
+
+      var crossedRightLimit = x >= 270;
+      var crossedLeftLimit = x <= 10;
+
+      //check if x surpases a certain value
+      if(crossedRightLimit) {
+
+        //if so, push back and reverse movement
+        x = 270;
+        speed = -speed;
+      }
+
+      //check if x is getting too close to the left border
+      else if(crossedLeftLimit) {
+
+        //if so, push back and reverse movement
+        x = 10;
+        speed = -speed;
+      }
+
+      x = x + speed;
+
+      //define color
+      blueZone = x > 0 && x < 100;
+      greenZone = !blueZone && x < 200;
+    };
+
+    //show it on the screen
+    var draw = function() {
+      ctx.clearRect(0,0,500,300);
+
+      if(blueZone) {
+        ctx.fillStyle = "#3333FF";
+      }
+      else if(greenZone) {
+        ctx.fillStyle = "#00CC66";
+      }
+      else {
+        ctx.fillStyle = "rgb(200, 0, 100)";
+      }
+
+      
+      ctx.fillRect(x, y, w, h);
+    };
+
+    //gets executed multiple times per second
+    var step = function() {
+
+      update();
+      draw();
+
+      window.requestAnimationFrame(step);
+    };
+
+    //initial kick
+    step();
+
+  </script>
+</body>
+</html>
